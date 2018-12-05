@@ -35,6 +35,11 @@ public class MinionRow
         return minions.indexOf(m);
     }
 
+    public Minion getMinion(int index)
+    {
+        return minions.get(index);
+    }
+
     public List<Minion> getPotentialTargets() // Returns a list of potential targets, factoring in minions with taunt
     {
         List<Minion> targets = new ArrayList<Minion>();
@@ -52,10 +57,14 @@ public class MinionRow
                 hadTaunt = true;
                 targets.add(m);
             }
-            else if (hadTaunt = false)
+            else
             {
-                targets.add(m);
+                if (hadTaunt == false)
+                {
+                    targets.add(m);
+                }
             }
+
         }
 
         return targets;

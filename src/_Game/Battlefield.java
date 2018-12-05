@@ -21,7 +21,7 @@ public class Battlefield
 
     public String toString()
     {
-        return playerRows[0].toString() + "\n vs \n" + playerRows[1].toString();
+        return playerRows[0].toString() + "\n vs \n" + playerRows[1].toString() + "\n\n~~~~~~~~~~~~~~~~~~~\n";
     }
 
 }

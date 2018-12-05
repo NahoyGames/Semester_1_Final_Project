@@ -12,11 +12,11 @@ public class SkeletonArmy extends Card
     }
 
     @Override
-    public void deployMinion()
+    public void deployMinion(int playerID)
     {
         for (int i = 0; i < 4; i++)
         {
-            Game.getBattlefield().getRow(0).addMinion(new Skeleton()); // TODO summon skeletons
+            Game.getBattlefield().getRow(playerID).addMinion(new Skeleton(playerID));
         }
     }
 

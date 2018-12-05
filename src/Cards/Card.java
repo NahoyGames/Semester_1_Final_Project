@@ -12,5 +12,5 @@ public abstract class Card
         this.description = description;
     }
 
-    public abstract void deployMinion();
+    public abstract void deployMinion(int playerID);
 }

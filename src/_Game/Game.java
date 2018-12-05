@@ -1,5 +1,6 @@
 package _Game;
 
+import Cards.Giant;
 import Cards.SkeletonArmy;
 
 public class Game
@@ -8,11 +9,30 @@ public class Game
 
     public static void main(String[] args)
     {
-        battlefield = new Battlefield();
+        System.out.println("Welcome to Hearthstone!\n");
 
-        new SkeletonArmy().deployMinion();
+        Game game = new Game();
+
+        new SkeletonArmy().deployMinion(0);
+        new Giant().deployMinion(1);
 
         System.out.println(battlefield.toString());
+
+        battlefield.getRow(1).getMinion(0).attack(battlefield.getRow(0).getPotentialTargets().get(0));
+
+        System.out.println(battlefield.toString());
+
+        while (true)
+        {
+            game.playRound();
+
+            System.out.println(battlefield.toString());
+        }
+    }
+
+    public Game()
+    {
+        battlefield = new Battlefield();
     }
 
     public static Battlefield getBattlefield()
@@ -20,4 +40,54 @@ public class Game
         return battlefield;
     }
 
+    public void playRound()
+    {
+
+        // Command Keyword
+        boolean validInput = false;
+        while (validInput == false)
+        {
+            String[] input = (TextIO.getlnString()).split(" ");
+
+            switch (input[0].toLowerCase())
+            {
+                case "/summon":
+                    switch (input[1].toLowerCase())
+                    {
+                        case "skeletonarmy":
+                            new SkeletonArmy().deployMinion(1);
+                            validInput = true;
+                            break;
+                        case "giant":
+                            new Giant().deployMinion(1);
+                            validInput = true;
+                            break;
+                        default:
+                            System.out.println("That ID was not recognized. Valid ID's -\n\"SkeletonArmy\"\n\"Giant\"");
+                    }
+                    break;
+                case "/attack":
+                    try
+                    {
+                        battlefield.getRow(1).getMinion(Integer.parseInt(input[1])).attack(battlefield.getRow(0).getMinion(Integer.parseInt(input[2])));
+                        validInput = true;
+                        break;
+                    }
+                    catch (IndexOutOfBoundsException e)
+                    {
+                        System.out.println("Incorrect usage! Format: \"/attack [your minion's position left-right] [enemy minion's position left-right]");
+                        break;
+                    }
+                case "/quit":
+                    System.out.println("Thanks for playing 👋");
+                    System.exit(0);
+                case "/help":
+                    System.out.println("Possible commands: \n\"/summon\",\n\"/quit\"");
+                    break;
+                default:
+                    System.out.println("Unknown command. Use \"/help\" for a list of known commands.");
+                    break;
+            }
+        }
+    }
 }
