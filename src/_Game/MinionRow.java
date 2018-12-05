@@ -49,22 +49,13 @@ public class MinionRow
         {
             if (m.getHasTaunt())
             {
-                if (hadTaunt = false)
-                {
-                    targets.clear();
-                }
-
-                hadTaunt = true;
                 targets.add(m);
             }
-            else
-            {
-                if (hadTaunt == false)
-                {
-                    targets.add(m);
-                }
-            }
+        }
 
+        if (targets.size() == 0)
+        {
+            return minions;
         }
 
         return targets;
@@ -76,7 +67,14 @@ public class MinionRow
 
         for (Minion m : minions)
         {
-            s += m.toString() + " | ";
+            if (m.getHasTaunt())
+            {
+                s += "[🛡" + m.toString() + "🛡] | ";
+            }
+            else
+            {
+                s += m.toString() + " | ";
+            }
         }
 
         return s;
