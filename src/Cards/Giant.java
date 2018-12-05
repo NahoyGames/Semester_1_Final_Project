@@ -17,4 +17,10 @@ public class Giant extends Card
         Game.getBattlefield().getRow(playerID).addMinion(new GiantMinion(playerID));
     }
 
+    @Override
+    public Card clone()
+    {
+        return new Giant();
+    }
+
 }

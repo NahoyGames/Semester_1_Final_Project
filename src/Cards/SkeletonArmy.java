@@ -20,4 +20,10 @@ public class SkeletonArmy extends Card
         }
     }
 
+    @Override
+    public Card clone()
+    {
+        return new SkeletonArmy();
+    }
+
 }

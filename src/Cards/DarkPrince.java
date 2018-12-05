@@ -18,4 +18,10 @@ public class DarkPrince extends Card
         Game.getBattlefield().getRow(playerID).addMinion(new DarkPrinceMinion(playerID));
     }
 
+    @Override
+    public Card clone()
+    {
+        return new DarkPrince();
+    }
+
 }

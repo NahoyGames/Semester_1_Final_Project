@@ -12,5 +12,17 @@ public abstract class Card
         this.description = description;
     }
 
+    public int getMana()
+    {
+        return mana;
+    }
+
+    public String toString()
+    {
+        return this.name + " - " + description + " | " + mana + "💧";
+    }
+
     public abstract void deployMinion(int playerID);
+
+    public abstract Card clone();
 }
