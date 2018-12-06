@@ -9,7 +9,7 @@ public class DarkPrince extends Card
 
     public DarkPrince()
     {
-        super(5, "Dark Prince", "Odd fella with a shield. Taunt.");
+        super(5, "Dark Prince", "Taunt");
     }
 
     @Override

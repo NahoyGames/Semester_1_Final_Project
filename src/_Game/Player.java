@@ -4,6 +4,7 @@ package _Game;
 import Cards.Card;
 import Minions.Minion;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,16 @@ public abstract class Player extends Minion
         return hand;
     }
 
+    public void drawHand(Graphics g, int width, int height)
+    {
+        int startPos = (width - (hand.size() * 80))/2;
+
+        for (int i = 0; i < hand.size(); i++)
+        {
+            hand.get(i).draw(g, startPos + i * 80, height - 110);
+        }
+    }
+
     public void drawFromDeck()
     {
         Card lastCard = deck.get(deck.size() - 1);
@@ -119,5 +130,12 @@ public abstract class Player extends Minion
     {
         mana = maxMana += 1;
         mana = mana > 10 ? 10 : mana;
+    }
+
+    // ** Extends minion stuff **
+    @Override
+    public void attack(Minion m, boolean myAttack)
+    {
+        m.takeDamage(getDamage());
     }
 }

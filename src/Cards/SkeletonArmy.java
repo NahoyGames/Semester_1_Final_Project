@@ -8,7 +8,7 @@ public class SkeletonArmy extends Card
 
     public SkeletonArmy()
     {
-        super(3, "Skeleton Army", "Spawns 4 skeletons");
+        super(3, "Skeleton Army", "4 skeletons");
     }
 
     @Override

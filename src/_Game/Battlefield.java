@@ -9,8 +9,8 @@ public class Battlefield
     public Battlefield()
     {
         playerRows = new MinionRow[] {
-                new MinionRow(),
-                new MinionRow()
+                new MinionRow(0),
+                new MinionRow(1)
         };
     }
 

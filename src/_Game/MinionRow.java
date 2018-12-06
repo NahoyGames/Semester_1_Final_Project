@@ -2,17 +2,21 @@ package _Game;
 
 import Minions.Minion;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // Container for deployed Minions
 public class MinionRow
 {
     private List<Minion> minions;
+    private int playerID; // Represents the owner of this row
 
-    public MinionRow()
+    public MinionRow(int playerID)
     {
-        minions = new ArrayList<Minion>();
+        minions = new ArrayList<Minion>(Arrays.asList(Game.getPlayer(playerID)));
+        this.playerID = playerID;
     }
 
     public void addMinion(Minion m)
@@ -55,7 +59,11 @@ public class MinionRow
 
         if (targets.size() == 0)
         {
-            return minions;
+            for (Minion m : minions)
+            {
+                targets.add(m);
+            }
+            targets.add(Game.getPlayer(playerID == 1 ? 0 : 1));
         }
 
         return targets;

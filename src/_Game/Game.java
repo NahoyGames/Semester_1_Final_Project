@@ -1,39 +1,40 @@
 package _Game;
 
-import Cards.DarkPrince;
-import Cards.Giant;
-import Cards.SkeletonArmy;
-import Minions.Minion;
+import javax.swing.*;
+import java.awt.*;
 
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class Game
+public class Game extends JFrame
 {
+    // ** Game Components **
     private static Battlefield battlefield;
+    private static GUI graphics;
+
+    // ** Players **
+    private static Player[] players;
 
     public static void main(String[] args)
     {
         System.out.println("Welcome to Hearthstone!\n");
 
+        // ** Creates the players
+        players = new Player[]
+                {
+                        new BotPlayer(),  // opposing player ... id = 0
+                        new InputPlayer() // 'you' player    ... id = 1
+                };
+
+
         // ** Creates the game
         Game game = new Game();
-
-        // ** Creates the 'you' player
-        Player human = new InputPlayer();
-
-        // ** Creates the opposing player
-        Player enemy = new BotPlayer();
 
         // ** Plays the game
         while (true)
         {
-            human.playRound();
+            players[1].playRound();
 
             System.out.println(battlefield.toString());
 
-            enemy.playRound();
+            players[0].playRound();
 
             System.out.println(battlefield.toString());
 
@@ -43,10 +44,36 @@ public class Game
     public Game()
     {
         battlefield = new Battlefield();
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(600, 400);
+        setResizable(true);
+
+        graphics = new GUI();
+        setContentPane(graphics);
+        setVisible(true);
     }
 
     public static Battlefield getBattlefield()
     {
         return battlefield;
+    }
+
+    public static GUI getGUI()
+    {
+        return graphics;
+    }
+
+    public static Player getPlayer(int id)
+    {
+        for (Player p : players)
+        {
+            if (p.getPlayerID() == id)
+            {
+                return p;
+            }
+        }
+
+        return null;
     }
 }
