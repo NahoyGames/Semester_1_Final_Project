@@ -15,7 +15,7 @@ public class MinionRow
 
     public MinionRow(int playerID)
     {
-        minions = new ArrayList<Minion>(Arrays.asList(Game.getPlayer(playerID)));
+        minions = new ArrayList<Minion>(); //Arrays.asList(Game.getPlayer(playerID))
         this.playerID = playerID;
     }
 

@@ -4,12 +4,15 @@ import Cards.DarkPrince;
 import Cards.Giant;
 import Cards.SkeletonArmy;
 import Minions.Minion;
+import Utilities.Vector2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class InputPlayer extends Player
 {
+
+    private int selectedCard; // -1 means no selected card
 
     public InputPlayer()
     {
@@ -136,6 +139,23 @@ public class InputPlayer extends Player
             }
 
             System.out.println("...\n");
+        }
+    }
+
+    public void detectCollision(Vector2 mousePos, int screenWidth, int screenHeight) // Takes the mouse position and detects if a card is clicked or un-clicked
+    {
+        int startPos = (screenWidth - (getHand().size() * 80))/2;
+
+        for (int i = 0; i < super.getHand().size(); i++)
+        {
+            Vector2 cardPos = new Vector2(startPos + i * 80, screenHeight - 110);
+
+            if ((cardPos.x <= mousePos.x) && (cardPos.x + 75 >= mousePos.x) && (cardPos.y <= mousePos.y) && (cardPos.y + 100 >= mousePos.y))
+            {
+                selectedCard = i == selectedCard ? -1 : i;
+                System.out.println("Selected card @ index: " + selectedCard);
+                break;
+            }
         }
     }
 
