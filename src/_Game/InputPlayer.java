@@ -6,6 +6,7 @@ import Cards.SkeletonArmy;
 import Minions.Minion;
 import Utilities.Vector2;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -25,6 +26,20 @@ public class InputPlayer extends Player
                 new DarkPrince(),
                 new SkeletonArmy()
         )));
+    }
+
+    @Override
+    public void drawHand(Graphics g, int width, int height)
+    {
+        super.drawHand(g, width, height);
+
+        if (selectedCard != -1)
+        {
+            int startPos = (width - (getHand().size() * 81)) / 2;
+
+            g.setColor(new Color(0xD4B22A));
+            g.drawRoundRect(startPos + selectedCard * 81, height - 110, 77, 102, 10, 10);
+        }
     }
 
     @Override
