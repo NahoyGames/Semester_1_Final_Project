@@ -189,24 +189,18 @@ public class InputPlayer extends Player
         }
 
         // Checks collisions for - Deployed Minions
-        int numberOfMinions = Game.getBattlefield().getRow(1).getMinions().size();
-        int startX = (screenWidth - (numberOfMinions * 80))/2;
-        int startY = (int)(screenHeight * 0.1 + (screenHeight * 0.3));
+        int minionCollision = detectCollisionOnMinion(mousePos, screenWidth, screenHeight, 1);
 
-        for (int i = 0; i < numberOfMinions; i++)
+        if (minionCollision != -1)
         {
-            Vector2 cardPos = new Vector2(startX + i * 80, startY);
-
-            if ((cardPos.x <= mousePos.x) && (cardPos.x + 75 >= mousePos.x) && (cardPos.y <= mousePos.y) && (cardPos.y + 100 >= mousePos.y))
-            {
-                selectedMinion = i == selectedMinion ? -1 : i;
-                selectedCard = -1;
-                System.out.println("Selected minion @ index: " + selectedMinion);
-                return;
-            }
+            selectedMinion = minionCollision == selectedMinion ? -1 : minionCollision;
+            selectedCard = -1;
+            System.out.println("Selected minion @ index: " + selectedMinion);
+            return;
         }
 
-        // Check for use card
+
+        // Check for use selected card
         if (selectedCard != -1)
         {
             if (mousePos.y < screenHeight - 110 && mousePos.y > (int)(screenHeight * 0.1 + 75))
@@ -228,6 +222,39 @@ public class InputPlayer extends Player
             }
         }
 
+        // Check for attack w/ selected minion
+        if (selectedMinion != -1)
+        {
+            minionCollision = detectCollisionOnMinion(mousePos, screenWidth, screenHeight, 0);
+
+            if (minionCollision != -1)
+            {
+                Game.getBattlefield().getRow(1).getMinion(selectedMinion).attack(Game.getBattlefield().getRow(0).getMinion(minionCollision));
+                selectedMinion = -1;
+                selectedCard = -1;
+                return;
+            }
+
+        }
+
     }
 
+    public int detectCollisionOnMinion(Vector2 mousePos, int screenWidth, int screenHeight, int playerID) // @param playerID = sample whose minions
+    {
+        int numberOfMinions = Game.getBattlefield().getRow(playerID).getMinions().size();
+        int startX = (screenWidth - (numberOfMinions * 80))/2;
+        int startY = (int)(screenHeight * 0.1 + (playerID * screenHeight * 0.3));
+
+        for (int i = 0; i < numberOfMinions; i++)
+        {
+            Vector2 cardPos = new Vector2(startX + i * 80, startY);
+
+            if ((cardPos.x <= mousePos.x) && (cardPos.x + 75 >= mousePos.x) && (cardPos.y <= mousePos.y) && (cardPos.y + 75 >= mousePos.y))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
 }

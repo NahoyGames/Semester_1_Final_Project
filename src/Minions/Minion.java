@@ -72,6 +72,9 @@ public abstract class Minion
 
         int textOffset = (75 - g.getFontMetrics().stringWidth(name)) / 2; // Name
         g.drawString(name, (int)pos.x + textOffset, (int)pos.y + 10);
+
+        textOffset = (75 - g.getFontMetrics().stringWidth(String.valueOf(health) + "♡")) / 2; // Health
+        g.drawString(String.valueOf(health) + "♡", (int)pos.x + textOffset, (int)pos.y + 40);
     }
 
     public int getHealth()

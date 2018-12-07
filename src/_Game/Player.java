@@ -3,6 +3,7 @@ package _Game;
 
 import Cards.Card;
 import Minions.Minion;
+import Utilities.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -74,6 +75,13 @@ public abstract class Player extends Minion
         {
             hand.get(i).draw(g, startPos + i * 80, height - 110);
         }
+    }
+
+    public void drawHero(Graphics g, int width, int height)
+    {
+        int startY = (int)(height * 0.1 + (playerID * height * 0.3));
+
+        super.draw(g, new Vector2(10, startY));
     }
 
     public void drawFromDeck()
