@@ -1,6 +1,9 @@
 package Minions;
 
+import Utilities.Vector2;
 import _Game.Game;
+
+import java.awt.*;
 
 public abstract class Minion
 {
@@ -54,6 +57,21 @@ public abstract class Minion
     public String toString()
     {
         return name + "(" + health + "♡) (" + damage + "⚔︎)";
+    }
+
+    public void draw(Graphics g, Vector2 pos)
+    {
+        // Draw Minion BG
+        g.setColor(new Color(0x697488));
+        g.fillRoundRect((int)pos.x, (int)pos.y + 3, 75, 75, 10, 10);
+        g.setColor(new Color(0x80939E));
+        g.fillRoundRect((int)pos.x, (int)pos.y, 75, 75, 10, 10);
+
+        // Text
+        g.setColor(Color.WHITE);
+
+        int textOffset = (75 - g.getFontMetrics().stringWidth(name)) / 2; // Name
+        g.drawString(name, (int)pos.x + textOffset, (int)pos.y + 10);
     }
 
     public int getHealth()

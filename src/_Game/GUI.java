@@ -93,6 +93,11 @@ public class GUI extends JPanel implements ActionListener
         }
 
         Game.getPlayer(1).drawHand(g, getWidth(), getHeight());
+
+        // Draw Minions
+        Game.getBattlefield().getRow(1).drawMinions(g, getWidth(), getHeight());
+        Game.getBattlefield().getRow(0).drawMinions(g, getWidth(), getHeight());
+
     }
 
     // ** Action Listener **

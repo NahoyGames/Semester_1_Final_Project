@@ -1,6 +1,7 @@
 package _Game;
 
 import Minions.Minion;
+import Utilities.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -42,6 +43,11 @@ public class MinionRow
     public Minion getMinion(int index)
     {
         return minions.get(index);
+    }
+
+    public List<Minion> getMinions()
+    {
+        return minions;
     }
 
     public List<Minion> getPotentialTargets() // Returns a list of potential targets, factoring in minions with taunt
@@ -86,5 +92,16 @@ public class MinionRow
         }
 
         return s;
+    }
+
+    public void drawMinions(Graphics g, int width, int height)
+    {
+        int startX = (width - (minions.size() * 80))/2;
+        int startY = (int)(height * 0.1 + (playerID * height * 0.3));
+
+        for (int i = 0; i < minions.size(); i++)
+        {
+            minions.get(i).draw(g, new Vector2(startX + i * 80, startY));
+        }
     }
 }

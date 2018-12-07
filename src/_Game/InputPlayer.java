@@ -13,7 +13,8 @@ import java.util.Arrays;
 public class InputPlayer extends Player
 {
 
-    private int selectedCard; // -1 means no selected card
+    private int selectedCard = -1; // -1 means no selected card
+    private int selectedMinion = -1; // -1 means no selected minion
 
     public InputPlayer()
     {
@@ -33,12 +34,24 @@ public class InputPlayer extends Player
     {
         super.drawHand(g, width, height);
 
+        // ** Highlights the selected card
         if (selectedCard != -1)
         {
-            int startPos = (width - (getHand().size() * 81)) / 2;
+            int startPos = (width - (getHand().size() * 80)) / 2;
 
             g.setColor(new Color(0xD4B22A));
-            g.drawRoundRect(startPos + selectedCard * 81, height - 110, 77, 102, 10, 10);
+            g.drawRoundRect(startPos + (selectedCard * 80) - 1, height - 110, 77, 102, 10, 10);
+        }
+
+        // ** Highlights the selected minion
+        if (selectedMinion != -1)
+        {
+            int startX = (width - (Game.getBattlefield().getRow(1).getMinions().size() * 80))/2;
+            int startY = (int)(height * 0.1 + (height * 0.3));
+
+            g.setColor(new Color(0xD4B22A));
+            g.drawRoundRect(startX + (selectedMinion * 80) - 1, startY, 77, 77, 10, 10);
+
         }
     }
 
@@ -159,6 +172,7 @@ public class InputPlayer extends Player
 
     public void detectCollision(Vector2 mousePos, int screenWidth, int screenHeight) // Takes the mouse position and detects if a card is clicked or un-clicked
     {
+        // Checks collisions for - Cards in hand
         int startPos = (screenWidth - (getHand().size() * 80))/2;
 
         for (int i = 0; i < super.getHand().size(); i++)
@@ -168,10 +182,52 @@ public class InputPlayer extends Player
             if ((cardPos.x <= mousePos.x) && (cardPos.x + 75 >= mousePos.x) && (cardPos.y <= mousePos.y) && (cardPos.y + 100 >= mousePos.y))
             {
                 selectedCard = i == selectedCard ? -1 : i;
+                selectedMinion = -1;
                 System.out.println("Selected card @ index: " + selectedCard);
-                break;
+                return;
             }
         }
+
+        // Checks collisions for - Deployed Minions
+        int numberOfMinions = Game.getBattlefield().getRow(1).getMinions().size();
+        int startX = (screenWidth - (numberOfMinions * 80))/2;
+        int startY = (int)(screenHeight * 0.1 + (screenHeight * 0.3));
+
+        for (int i = 0; i < numberOfMinions; i++)
+        {
+            Vector2 cardPos = new Vector2(startX + i * 80, startY);
+
+            if ((cardPos.x <= mousePos.x) && (cardPos.x + 75 >= mousePos.x) && (cardPos.y <= mousePos.y) && (cardPos.y + 100 >= mousePos.y))
+            {
+                selectedMinion = i == selectedMinion ? -1 : i;
+                selectedCard = -1;
+                System.out.println("Selected minion @ index: " + selectedMinion);
+                return;
+            }
+        }
+
+        // Check for use card
+        if (selectedCard != -1)
+        {
+            if (mousePos.y < screenHeight - 110 && mousePos.y > (int)(screenHeight * 0.1 + 75))
+            {
+                try
+                {
+                    this.useCardInHand(selectedCard);
+                    selectedCard = -1;
+                    selectedMinion = -1;
+                    return;
+                }
+                catch (IllegalArgumentException e)
+                {
+                    System.out.println(e);
+                    selectedCard = -1;
+                    selectedMinion = -1;
+                    return;
+                }
+            }
+        }
+
     }
 
 }

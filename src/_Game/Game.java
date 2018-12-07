@@ -16,15 +16,15 @@ public class Game extends JFrame
     {
         System.out.println("Welcome to Hearthstone!\n");
 
-        // ** Creates the game
-        Game game = new Game();
-
         // ** Creates the players
         players = new Player[]
                 {
                         new BotPlayer(),  // opposing player ... id = 0
                         new InputPlayer() // 'you' player    ... id = 1
                 };
+
+        // ** Creates the game
+        Game game = new Game();
 
         // ** Plays the game
         while (true)
@@ -44,6 +44,7 @@ public class Game extends JFrame
     {
         battlefield = new Battlefield();
 
+        setBackground(new Color(28, 28, 29));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 400);
         setResizable(true);
