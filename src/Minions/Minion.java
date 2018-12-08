@@ -14,6 +14,8 @@ public abstract class Minion
 
     private boolean hasTaunt;
 
+    private int turnsToAttack;
+
     private int playerID;
 
     public Minion(String name, int health, int damage, boolean hasTaunt, int playerID)
@@ -23,6 +25,8 @@ public abstract class Minion
         this.damage = damage;
         this.hasTaunt = hasTaunt;
         this.playerID = playerID;
+
+        this.turnsToAttack = 1;
     }
 
     public void takeDamage(int amount)
@@ -40,13 +44,33 @@ public abstract class Minion
         if (myAttack == true)
         {
             m.attack(this, false);
+            turnsToAttack = 1;
         }
         m.takeDamage(damage);
     }
 
     public  void attack(Minion m)
     {
-        attack(m, true);
+        if (Game.getBattlefield().getRow(playerID == 0 ? 1: 0).getPotentialTargets().contains(m))
+        {
+            if (turnsToAttack <= 0)
+            {
+                attack(m, true);
+            }
+            else
+            {
+                throw new IllegalArgumentException("This troop cannot attack now, wait at least " + turnsToAttack + " turn(s)");
+            }
+        }
+        else
+        {
+            throw new IllegalArgumentException("Can't attack this troop! Perhaps some with taunt(🛡) are present?");
+        }
+    }
+
+    public void endTurn() // Used for end-turn mechanics
+    {
+        turnsToAttack -= turnsToAttack == 0 ? 0 : 1;
     }
 
     public void die()

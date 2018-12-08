@@ -31,7 +31,6 @@ public abstract class Player extends Minion
     private int mana, maxMana;
 
 
-
     public Player(int playerID, int name, ArrayList<Card> deck)
     {
         super(playerNames[name], 30, 1, false, playerID);
@@ -44,7 +43,7 @@ public abstract class Player extends Minion
         // ** Init start-of-game stuff
         for (int i = 0; i < 4; i++)
         {
-            drawFromDeck();
+            getCardFromDeck();
         }
     }
 
@@ -60,7 +59,18 @@ public abstract class Player extends Minion
     }
 
     // ** Deck Utility **
-    public abstract void playRound();
+    public void playTurn()
+    {
+        System.out.println(this.getName() + " 's turn!\n");
+
+        resetMana();
+        getCardFromDeck();
+    }
+
+    public void endTurn()
+    {
+        Game.nextTurn();
+    }
 
     public List<Card> getHand()
     {
@@ -84,7 +94,7 @@ public abstract class Player extends Minion
         super.draw(g, new Vector2(10, startY));
     }
 
-    public void drawFromDeck()
+    public void getCardFromDeck()
     {
         Card lastCard = deck.get(deck.size() - 1);
 
@@ -109,7 +119,7 @@ public abstract class Player extends Minion
         }
 
         // Summon card
-        c.deployMinion(playerID);
+        c.deployCard(playerID);
 
         // Withdraw mana
         useMana(c.getMana());

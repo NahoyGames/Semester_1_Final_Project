@@ -69,10 +69,18 @@ public class MinionRow
             {
                 targets.add(m);
             }
-            targets.add(Game.getPlayer(playerID == 1 ? 0 : 1));
+            targets.add(Game.getPlayer(playerID));
         }
 
         return targets;
+    }
+
+    public void endTurnsForAllMinions()
+    {
+        for (Minion m : minions)
+        {
+            m.endTurn();
+        }
     }
 
     public String toString()

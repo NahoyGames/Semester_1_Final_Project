@@ -12,7 +12,7 @@ public class SkeletonArmy extends Card
     }
 
     @Override
-    public void deployMinion(int playerID)
+    public void deployCard(int playerID)
     {
         for (int i = 0; i < 4; i++)
         {

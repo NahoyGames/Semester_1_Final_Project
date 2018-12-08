@@ -2,12 +2,17 @@ package _Game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Game extends JFrame
 {
     // ** Game Components **
+    private static Game game;
     private static Battlefield battlefield;
     private static GUI graphics;
+
+    private static int whosTurn = 1; // PlayerID determines turn
 
     // ** Players **
     private static Player[] players;
@@ -24,20 +29,12 @@ public class Game extends JFrame
                 };
 
         // ** Creates the game
-        Game game = new Game();
+        game = new Game();
 
-        // ** Plays the game
-        while (true)
-        {
-            players[1].playRound();
+        // ** Kick-starts the game
+        players[whosTurn].playTurn();
 
-            System.out.println(battlefield.toString());
 
-            players[0].playRound();
-
-            System.out.println(battlefield.toString());
-
-        }
     }
 
     public Game()
@@ -51,7 +48,38 @@ public class Game extends JFrame
 
         graphics = new GUI();
         setContentPane(graphics);
+
+        // End turn button
+        JButton endTurn = new JButton("End Turn");
+        endTurn.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                battlefield.getRow(0).endTurnsForAllMinions();
+                battlefield.getRow(1).endTurnsForAllMinions();
+                players[1].endTurn();
+            }
+        });
+
+        graphics.add(endTurn);
+
         setVisible(true);
+
+    }
+
+    public static void outputMessage(String m)
+    {
+        JOptionPane.showMessageDialog(game, m);
+    }
+
+    public static void nextTurn() // Triggers the next turn
+    {
+        // Changes who's turn
+        whosTurn = whosTurn == 1 ? 0 : 1;
+
+        // Plays that player's turn
+        players[whosTurn].playTurn();
     }
 
     public static Battlefield getBattlefield()

@@ -12,7 +12,7 @@ public class Giant extends Card
     }
 
     @Override
-    public void deployMinion(int playerID)
+    public void deployCard(int playerID)
     {
         Game.getBattlefield().getRow(playerID).addMinion(new GiantMinion(playerID));
     }

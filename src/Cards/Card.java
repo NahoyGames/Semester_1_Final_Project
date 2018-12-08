@@ -43,7 +43,7 @@ public abstract class Card
 
     }
 
-    public abstract void deployMinion(int playerID);
+    public abstract void deployCard(int playerID);
 
     public abstract Card clone();
 }

@@ -13,7 +13,7 @@ public class DarkPrince extends Card
     }
 
     @Override
-    public void deployMinion(int playerID)
+    public void deployCard(int playerID)
     {
         Game.getBattlefield().getRow(playerID).addMinion(new DarkPrinceMinion(playerID));
     }
