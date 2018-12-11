@@ -2,9 +2,13 @@ package _Game;
 
 import Utilities.Vector2;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GUI extends JPanel implements ActionListener
 {
@@ -17,6 +21,9 @@ public class GUI extends JPanel implements ActionListener
     // ** Hitbox Stuff **
     private boolean mousePressed = false;
     private Vector2 mousePosition = Vector2.zero();
+
+    // ** Graphics References **
+    private BufferedImage manaIcon;
 
     public GUI()
     {
@@ -80,6 +87,18 @@ public class GUI extends JPanel implements ActionListener
                 mousePosition.y = e.getY();
             }
         });
+
+
+        // ** Get Graphics **
+        try
+        {
+            manaIcon = ImageIO.read(new File("src/Graphics/manaIcon.png"));
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+            System.exit(0);
+        }
     }
 
     public void drawFrame(Graphics g)
@@ -102,6 +121,11 @@ public class GUI extends JPanel implements ActionListener
         // Draw Minions
         Game.getBattlefield().getRow(1).drawMinions(g, getWidth(), getHeight());
         Game.getBattlefield().getRow(0).drawMinions(g, getWidth(), getHeight());
+
+        // Draw Mana
+        g.drawImage(manaIcon, 25, (int)(getHeight() - 60), 50, 50, this);
+        g.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 25));
+        g.drawString("" + Game.getPlayer(1).getMana(), 40, (int)(getHeight() - 25));
 
     }
 

@@ -3,7 +3,11 @@ package Minions;
 import Utilities.Vector2;
 import _Game.Game;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Minion
 {
@@ -18,7 +22,10 @@ public abstract class Minion
 
     private int playerID;
 
-    public Minion(String name, int health, int damage, boolean hasTaunt, int playerID)
+    private BufferedImage image;
+    private BufferedImage tauntIcon;
+
+    public Minion(String name, int health, int damage, boolean hasTaunt, String imagePath, int playerID)
     {
         this.name = name;
         this.health = health;
@@ -27,6 +34,18 @@ public abstract class Minion
         this.playerID = playerID;
 
         this.turnsToAttack = 1;
+
+        // ** Get Graphics **
+        try
+        {
+            image = ImageIO.read(new File(imagePath));
+            tauntIcon = ImageIO.read(new File("src/Graphics/shieldIcon.png"));
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+            System.exit(0);
+        }
     }
 
     public void takeDamage(int amount)
@@ -86,10 +105,19 @@ public abstract class Minion
     public void draw(Graphics g, Vector2 pos)
     {
         // Draw Minion BG
-        g.setColor(new Color(0x697488));
+        g.setColor(turnsToAttack > 0 ? new Color(0x9D524A) : new Color(0x5E8858));
         g.fillRoundRect((int)pos.x, (int)pos.y + 3, 75, 75, 10, 10);
         g.setColor(new Color(0x80939E));
         g.fillRoundRect((int)pos.x, (int)pos.y, 75, 75, 10, 10);
+
+        // Image
+        g.drawImage(image, (int)pos.x + 12, (int)pos.y + 12, 50, 50, Game.getGUI());
+
+        // Taunt
+        if (hasTaunt)
+        {
+            g.drawImage(tauntIcon, (int)pos.x + 65, (int)pos.y - 10, 20, 20, Game.getGUI());
+        }
 
         // Text
         g.setColor(Color.WHITE);
@@ -98,7 +126,10 @@ public abstract class Minion
         g.drawString(name, (int)pos.x + textOffset, (int)pos.y + 10);
 
         textOffset = (75 - g.getFontMetrics().stringWidth(String.valueOf(health) + "♡")) / 2; // Health
-        g.drawString(String.valueOf(health) + "♡", (int)pos.x + textOffset, (int)pos.y + 40);
+        g.drawString(String.valueOf(health) + "♡", (int)pos.x + textOffset - 20, (int)pos.y + 70);
+
+        textOffset = (75 - g.getFontMetrics().stringWidth(String.valueOf(damage) + " dmg️")) / 2; // Health
+        g.drawString(String.valueOf(damage) + " dmg", (int)pos.x + textOffset + 20, (int)pos.y + 70);
     }
 
     public int getHealth()

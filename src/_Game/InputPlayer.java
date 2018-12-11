@@ -6,7 +6,11 @@ import Cards.Giant;
 import Cards.SkeletonArmy;
 import Utilities.Vector2;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,6 +33,7 @@ public class InputPlayer extends Player
                 new SkeletonArmy(),
                 new Fireball()
         )));
+
     }
 
     @Override

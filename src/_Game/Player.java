@@ -33,7 +33,7 @@ public abstract class Player extends Minion
 
     public Player(int playerID, int name, ArrayList<Card> deck)
     {
-        super(playerNames[name], 30, 1, false, playerID);
+        super(playerNames[name], 30, 1, false, "src/Graphics/defaultMinion.png", playerID);
 
         this.playerID = playerID;
         this.name = playerNames[name];
@@ -41,7 +41,7 @@ public abstract class Player extends Minion
         this.hand = new ArrayList<Card>();
 
         // ** Init start-of-game stuff
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             getCardFromDeck();
         }
