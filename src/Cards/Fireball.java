@@ -9,7 +9,7 @@ public class Fireball extends Card
 
     public Fireball()
     {
-        super(5, "Fireball", "2 Damage to ALL");
+        super(5, "Fireball", "2 Damage to ALL", "src/Graphics/fireballCard.png");
     }
 
     @Override

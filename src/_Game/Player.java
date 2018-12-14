@@ -47,6 +47,13 @@ public abstract class Player extends Minion
         }
     }
 
+    @Override
+    public void die()
+    {
+        Game.outputMessage("GAME OVER\n" + Game.getPlayer(playerID == 1 ? 0 : 1).getName() + " wins.");
+        System.exit(0);
+    }
+
 
     public String getName()
     {

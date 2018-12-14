@@ -1,17 +1,34 @@
 package Cards;
 
+import _Game.Game;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Card
 {
     private int mana;
     private String name, description;
+    private BufferedImage image;
 
-    public Card(int mana, String name, String description)
+    public Card(int mana, String name, String description, String imagePath)
     {
         this.mana = mana;
         this.name = name;
         this.description = description;
+
+        try
+        {
+            image = ImageIO.read(new File(imagePath));
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+            System.exit(0);
+        }
     }
 
     public int getMana()
@@ -32,6 +49,10 @@ public abstract class Card
         g.setColor(new Color(0x80939E));
         g.fillRoundRect(x, y, 75, 100, 10, 10);
 
+        // Image
+        g.drawImage(image, x + 12, y + 12, 50, 75, Game.getGUI());
+
+
         // Text
         g.setColor(Color.WHITE);
 
@@ -40,6 +61,9 @@ public abstract class Card
 
         textOffset = (75 - g.getFontMetrics().stringWidth(description)) / 2; // Description
         g.drawString(description, x + textOffset, y + 30);
+
+        textOffset = (75 - g.getFontMetrics().stringWidth(mana + " mana")) / 2; // Health
+        g.drawString(mana + " mana", x + textOffset, y + 85);
 
     }
 

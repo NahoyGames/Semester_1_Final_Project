@@ -1,9 +1,6 @@
 package _Game;
 
-import Cards.DarkPrince;
-import Cards.Fireball;
-import Cards.Giant;
-import Cards.SkeletonArmy;
+import Cards.*;
 import Utilities.Vector2;
 
 import javax.imageio.ImageIO;
@@ -31,7 +28,9 @@ public class InputPlayer extends Player
                 new Giant(),
                 new DarkPrince(),
                 new SkeletonArmy(),
-                new Fireball()
+                new Fireball(),
+                new Goblin(),
+                new Goblin()
         )));
 
     }

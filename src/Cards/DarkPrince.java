@@ -9,7 +9,7 @@ public class DarkPrince extends Card
 
     public DarkPrince()
     {
-        super(5, "Dark Prince", "Taunt");
+        super(5, "Dark Prince", "Taunt", "src/Graphics/defaultMinion.png");
     }
 
     @Override

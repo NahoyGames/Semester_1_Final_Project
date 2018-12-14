@@ -8,7 +8,7 @@ public class Giant extends Card
 
     public Giant()
     {
-        super(5, "Giant", "Big n' Bold");
+        super(5, "Giant", "Big n' Bold", "src/Graphics/defaultMinion.png");
     }
 
     @Override
