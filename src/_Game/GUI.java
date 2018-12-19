@@ -127,6 +127,12 @@ public class GUI extends JPanel implements ActionListener
         g.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 25));
         g.drawString("" + Game.getPlayer(1).getMana(), 40, (int)(getHeight() - 25));
 
+        // Draw Console
+        for (String s : Game.getConsole().split("\n"))
+        {
+            //g.drawString(s, 10, 100);
+        }
+
     }
 
     // ** Action Listener **

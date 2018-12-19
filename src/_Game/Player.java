@@ -33,7 +33,7 @@ public abstract class Player extends Minion
 
     public Player(int playerID, int name, ArrayList<Card> deck)
     {
-        super(playerNames[name], 30, 1, false, "src/Graphics/defaultMinion.png", playerID);
+        super(playerNames[name], 30, 0, false, "src/Graphics/defaultMinion.png", playerID);
 
         this.playerID = playerID;
         this.name = playerNames[name];

@@ -13,6 +13,7 @@ public class Game extends JFrame
     private static GUI graphics;
 
     private static int whosTurn = 1; // PlayerID determines turn
+    private static String[] console = new String[6];
 
     // ** Players **
     private static Player[] players;
@@ -30,6 +31,9 @@ public class Game extends JFrame
 
         // ** Creates the game
         game = new Game();
+
+        // ** Welcomes the Player
+        outputMessage("Welcome to Hearthstone!\n\nPlease read the attached 'readme.png' for instructions.");
 
         // ** Kick-starts the game
         players[whosTurn].playTurn();
@@ -71,6 +75,31 @@ public class Game extends JFrame
     public static void outputMessage(String m)
     {
         JOptionPane.showMessageDialog(game, m);
+    }
+
+    public static void addToConsole(String m) // Prints to the game console
+    {
+        if (console[console.length - 1] != null || console[console.length - 1] != "")
+        {
+            for (int i = 0; i < console.length - 1; i++)
+            {
+                console[i] = console[i + 1];
+            }
+        }
+
+        console[console.length] = m;
+    }
+
+    public static String getConsole()
+    {
+        String output = "";
+
+        for (String s : console)
+        {
+            output += s + "\n";
+        }
+
+        return  output;
     }
 
     public static void nextTurn() // Triggers the next turn

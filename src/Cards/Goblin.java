@@ -9,7 +9,7 @@ public class Goblin extends Card
 
     public Goblin()
     {
-        super(1, "Goblin", "Green", "src/Graphics/defaultMinion.png");
+        super(1, "Goblin", "Green", "src/Graphics/goblinCard.png");
     }
 
     @Override
